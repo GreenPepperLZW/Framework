@@ -2,7 +2,7 @@ package helloworld;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.MessageProperties;
 import org.junit.jupiter.api.Test;
 import util.RabbitMqUtils;
 
@@ -38,11 +38,11 @@ public class Porvider {
          * 发布消息
          * 参数1：交换机
          * 参数2：队列名称
-         * 参数3：发布消息时的一些属性
+         * 参数3：发布消息时的一些属性，如消息持久化：MessageProperties.PERSISTENT_TEXT_PLAIN
          * 参数4：消息的具体内容
          */
         for (int i=1;i<5;i++){
-            channel.basicPublish("","hello",null,"hello rabbitMq".getBytes());
+            channel.basicPublish("","hello", MessageProperties.PERSISTENT_TEXT_PLAIN,"hello rabbitMq".getBytes());
             Thread.sleep(1000);
         }
 
