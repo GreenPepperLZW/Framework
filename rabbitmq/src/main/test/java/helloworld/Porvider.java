@@ -4,6 +4,7 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import org.junit.jupiter.api.Test;
+import util.RabbitMqUtils;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -21,20 +22,7 @@ public class Porvider {
      */
     @Test
     public void testSendMessage() throws IOException, TimeoutException, InterruptedException {
-        // 1.创建连接mq的连接工厂
-        ConnectionFactory connectionFactory = new ConnectionFactory();
-        // 2.设置连接rabbitmq的主机
-        connectionFactory.setHost("39.104.201.23");
-        // 3.设置端口号
-        connectionFactory.setPort(5672);
-        // 4.设置连接哪个虚拟主机
-        connectionFactory.setVirtualHost("/ems");
-        // 5.设置访问虚拟主机的用户名和密码
-        connectionFactory.setUsername("ems");
-        connectionFactory.setPassword("123");
-
-        // 获取连接对象
-        Connection connection = connectionFactory.newConnection();
+        Connection connection = RabbitMqUtils.getConnection();
         // 获取连接通道
         Channel channel = connection.createChannel();
         /**
@@ -58,11 +46,8 @@ public class Porvider {
             Thread.sleep(1000);
         }
 
-        // 通道关闭后无法监听队列中的消息
-        /*// 关闭通道
-        channel.close();
-        // 关闭连接
-        connection.close();*/
+
+        RabbitMqUtils.closeConnectionAndChannel(channel,connection);
 
     }
 }
