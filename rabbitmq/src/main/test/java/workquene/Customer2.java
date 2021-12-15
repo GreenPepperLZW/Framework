@@ -24,7 +24,14 @@ public class Customer2 {
         channel.basicConsume("work",true,new DefaultConsumer(channel){
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 System.out.println("消费者-2"+new String(body));
+                // 手动确认消息
+                channel.basicAck(envelope.getDeliveryTag(),false);
             }
         });
     }
