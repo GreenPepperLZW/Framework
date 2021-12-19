@@ -62,4 +62,16 @@ public class TestRabbitMQ {
         String routeKey = "error";
         rabbitTemplate.convertAndSend("directs",routeKey,"route模型消息");
     }
+
+    /**
+     * topic 动态路由
+     * 订阅模式
+     */
+    @Test
+    public void testTopic() {
+//        String route = "user.save";
+        String routeKey = "order.save";
+
+        rabbitTemplate.convertAndSend("topics",routeKey,"topic模型消息");
+    }
 }
