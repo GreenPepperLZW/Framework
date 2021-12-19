@@ -69,9 +69,9 @@ public class TestRabbitMQ {
      */
     @Test
     public void testTopic() {
-//        String route = "user.save";
-        String routeKey = "order.save";
-
+        // String route = "user.save";
+        // String routeKey = "order.save";
+        String routeKey = "product.save.add";
         rabbitTemplate.convertAndSend("topics",routeKey,"topic模型消息");
     }
 }
