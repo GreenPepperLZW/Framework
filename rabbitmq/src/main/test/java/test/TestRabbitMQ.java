@@ -26,11 +26,21 @@ public class TestRabbitMQ {
      * 直连模式生产消息
      */
     @Test
-    public void test() {
+    public void testHello() {
         /**
          * 建消息体自动转换为为byte发送到队列
          * 如果没有该队列的消费者，队列不会被创建
          */
         rabbitTemplate.convertAndSend("hello","hello world");
+    }
+
+    /**
+     * 工作模式
+     */
+    @Test
+    public void testWork() {
+        for (int i = 0; i < 10; i++) {
+            rabbitTemplate.convertAndSend("work","work 模型消息"+1);
+        }
     }
 }
