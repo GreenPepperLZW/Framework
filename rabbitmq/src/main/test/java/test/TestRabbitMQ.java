@@ -35,12 +35,21 @@ public class TestRabbitMQ {
     }
 
     /**
-     * 工作模式
+     * 工作模式生产者
      */
     @Test
     public void testWork() {
         for (int i = 0; i < 10; i++) {
             rabbitTemplate.convertAndSend("work","work 模型消息"+1);
         }
+    }
+
+    /**
+     * 广播模型生产者
+     */
+    @Test
+    public void testFanout() {
+        // 如果该交换机没有绑定消费者，交换机不会被创建
+        rabbitTemplate.convertAndSend("logs","","fanout模型消息");
     }
 }
