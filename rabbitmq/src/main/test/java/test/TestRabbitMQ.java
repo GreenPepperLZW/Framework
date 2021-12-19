@@ -52,4 +52,14 @@ public class TestRabbitMQ {
         // 如果该交换机没有绑定消费者，交换机不会被创建
         rabbitTemplate.convertAndSend("logs","","fanout模型消息");
     }
+
+    /**
+     * route 路由模式生产者
+     */
+    @Test
+    public void testRoute() {
+        // String routeKey = "info";
+        String routeKey = "error";
+        rabbitTemplate.convertAndSend("directs",routeKey,"route模型消息");
+    }
 }
