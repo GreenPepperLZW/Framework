@@ -1,8 +1,10 @@
 package com.lzw.es.util;
 
 import org.apache.http.HttpHost;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.search.SearchHits;
 
 import java.io.IOException;
 
@@ -35,5 +37,12 @@ public class EsClientUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void print(SearchHits hits,SearchResponse response){
+        System.out.println("took:" + response.getTook());
+        System.out.println("timeout:" + response.isTimedOut());
+        System.out.println("total:" + hits.getTotalHits());
+        System.out.println("MaxScore:" + hits.getMaxScore());
     }
 }

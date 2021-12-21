@@ -22,9 +22,9 @@ public class EsDocInsertBatch {
         RestHighLevelClient esClient = EsClientUtil.getEsClient();
         // 创建批量新增请求对象
         BulkRequest bulkRequest = new BulkRequest();
-        bulkRequest.add(new IndexRequest().index("user").id("002").source(XContentType.JSON, "name", "zhangsan"));
-        bulkRequest.add(new IndexRequest().index("user").id("003").source(XContentType.JSON, "name", "lisi"));
-        bulkRequest.add(new IndexRequest().index("user").id("004").source(XContentType.JSON, "name", "wangwu"));
+        bulkRequest.add(new IndexRequest().index("user").id("002").source(XContentType.JSON, "name", "zhangsan","age",30,"sex","男"));
+        bulkRequest.add(new IndexRequest().index("user").id("003").source(XContentType.JSON, "name", "lisi","age",40,"sex","男的"));
+        bulkRequest.add(new IndexRequest().index("user").id("004").source(XContentType.JSON, "name", "wangwu","age",50,"sex","女的"));
 
         // 执行批量新增操作
         BulkResponse response = esClient.bulk(bulkRequest, RequestOptions.DEFAULT);
