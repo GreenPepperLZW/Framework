@@ -41,6 +41,7 @@ public class ItemProcessorDemo {
     @Autowired
     @Qualifier("dbJdbcReader")
     private ItemReader<? extends Customer> dbJdbcReader;
+
     @Autowired
     @Qualifier("fileItemWriter")
     private ItemWriter<? super Customer> fileItemWriter;
