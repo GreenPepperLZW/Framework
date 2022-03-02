@@ -7,6 +7,8 @@
         <module>rabbitmq</module>
         <module>elasticSearch</module>
         <module>codec</module>
+        <module>springBatch</module>
+        <module>mybatisPlus</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
