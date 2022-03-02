@@ -1,0 +1,14 @@
+CREATE TABLE USER(
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  USERNAME VARCHAR(30),
+  PASSWORD VARCHAR(20),
+  AGE INT
+);
+
+
+create TABLE cutomer(
+  id BIGINT PRIMARY KEY,
+  firstName VARCHAR(50),
+  lastName VARCHAR(50),
+  birthday VARCHAR(50)
+);
