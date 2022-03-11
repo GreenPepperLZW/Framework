@@ -21,8 +21,15 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.1.0</version>
+            <version>3.3.2</version>
         </dependency>
+
+        <!--<dependency>
+            <groupId>com.github.yulichang</groupId>
+            <artifactId>mybatis-plus-join</artifactId>
+            <version>1.0.8</version>
+        </dependency>-->
+
         <!--mysql 驱动-->
         <dependency>
             <groupId>mysql</groupId>

@@ -4,3 +4,7 @@ spring:
     username: root
     password: sasa
     url: jdbc:mysql://127.0.0.1:3306/test?userSSL=false
+
+logging:
+  level:
+    com.lzw: debug

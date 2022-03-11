@@ -23,3 +23,16 @@ VALUES (1087982257332887553, '大boss', 40, 'boss@baomidou.com', NULL
 , '2019-01-14 09:15:15'),
 (1094592041087729666, '刘红雨', 32, 'lhm@baomidou.com', 1088248166370832385
 , '2019-01-14 09:48:16');
+
+-- -----------------------------------------------------------------------------
+
+CREATE TABLE `user_detail`  (
+`id` int(10) NOT NULL,
+`user_id` bigint(50) NULL DEFAULT NULL,
+`address` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
+`phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
+PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8;
+
+
+INSERT INTO `user_detail` VALUES (1, 1087982257332887553, '浦东', '123');

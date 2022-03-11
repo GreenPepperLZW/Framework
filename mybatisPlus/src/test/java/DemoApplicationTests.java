@@ -1,7 +1,10 @@
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lzw.PlusTestApplication;
 import lzw.entity.User;
 import lzw.mapper.UserMapper;
+import lzw.restMap.UserDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +44,22 @@ public class DemoApplicationTests {
         List<Object> objects = userMapper.selectObjs(userWrapper);
 
         System.out.println("总数为"+objects.get(0));
+
+    }
+
+    /**
+     * 1对1联表分页查询
+     */
+    @Test
+    public void testPage() {
+        Page<User> page = new Page<>(1, 3);
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+//        queryWrapper.eq("name","大boss");
+        IPage<UserDto> userDtoIPage = userMapper.pageCanditionQuery(page, queryWrapper);
+
+        List<UserDto> records = userDtoIPage.getRecords();
+        records.forEach(System.out::println);
+
 
     }
 
