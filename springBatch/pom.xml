@@ -52,6 +52,7 @@
             <artifactId>xstream</artifactId>
             <version>1.4.7</version>
         </dependency>
+        <!-- xml与对象之间转换 -->
 
     </dependencies>
 
