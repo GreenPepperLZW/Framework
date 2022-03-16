@@ -9,6 +9,7 @@
         <module>codec</module>
         <module>springBatch</module>
         <module>mybatisPlus</module>
+        <module>test</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
