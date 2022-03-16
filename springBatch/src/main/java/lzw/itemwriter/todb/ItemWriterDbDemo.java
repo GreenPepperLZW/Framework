@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
  * @date : 2022/3/2
  * @since : 1.0
  */
-@Configuration
+//@Configuration
 public class ItemWriterDbDemo {
 
     @Autowired
