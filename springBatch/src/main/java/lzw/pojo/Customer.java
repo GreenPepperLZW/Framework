@@ -55,4 +55,7 @@ public class Customer {
                 ", birthday='" + birthday + '\'' +
                 '}';
     }
+
+    public Customer() {
+    }
 }

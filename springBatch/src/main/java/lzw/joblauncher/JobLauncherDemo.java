@@ -1,16 +1,16 @@
 package lzw.joblauncher;
 
 import lzw.pojo.Customer;
-import org.springframework.batch.core.*;
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
-import org.springframework.batch.item.file.mapping.DefaultLineMapper;
+import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
-import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.batch.item.file.transform.FieldSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -78,36 +78,30 @@ public class JobLauncherDemo{
     @StepScope
     public FlatFileItemReader<Customer> itemLauncherReader(@Value("#{jobParameters[msg]}") String msg) {
         System.out.println("=========参数："+msg);
-        FlatFileItemReader<Customer> reader = new FlatFileItemReader<Customer>();
-        reader.setResource(new ClassPathResource("customer.txt"));
-        //跳过第一行
-        reader.setLinesToSkip(1);
-        //数据解析
-        DelimitedLineTokenizer tokenizer = new DelimitedLineTokenizer();
-        tokenizer.setNames(new String[]{"id", "fistName", "lastName", "birthday"});
-        //把解析出的一个数据映射为Customer对象
-        DefaultLineMapper<Customer> mapper = new DefaultLineMapper<>();
-        mapper.setLineTokenizer(tokenizer);
-        mapper.setFieldSetMapper(new FieldSetMapper<Customer>() {
+         return new FlatFileItemReaderBuilder<Customer>()
+                .name("itemLauncherReader")
+                 .resource(new ClassPathResource("customer.txt"))
+                .delimited()
+                .delimiter("|")
+                .names(new String[]{"id", "fistName", "lastName", "birthday"})
+                .fieldSetMapper(new CustFileSetMapper())
+                .linesToSkip(1)
+                .build();
 
-            /**
-             * @Description: mapFieldSet 映射
-             * @Param: [fieldSet]
-             * @Return: com.example.springbatchdemo.pojo.Customer
-             */
-            @Override
-            public Customer mapFieldSet(FieldSet fieldSet) throws BindException {
-                Customer customer = new Customer();
-                customer.setId(fieldSet.readLong("id"));
-                customer.setFirstName(fieldSet.readString("fistName"));
-                customer.setLastName(fieldSet.readString("lastName"));
-                customer.setBirthday(fieldSet.readString("birthday"));
-                return customer;
-            }
-        });
-        mapper.afterPropertiesSet();
-        reader.setLineMapper(mapper);
-        return reader;
+    }
+
+    public class CustFileSetMapper implements FieldSetMapper<Customer>{
+
+        @Override
+        public Customer mapFieldSet(FieldSet fieldSet) throws BindException {
+            Customer customer = new Customer();
+            customer.setId(fieldSet.readLong("id"));
+            customer.setFirstName(fieldSet.readString("fistName"));
+            customer.setLastName(fieldSet.readString("lastName"));
+            customer.setBirthday(fieldSet.readString("birthday"));
+            return customer;
+        }
     }
 
 }
+

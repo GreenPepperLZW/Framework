@@ -30,11 +30,12 @@ public class JobLauncherController {
     @Autowired
     public Job jobLauncherDemoJob;
 
-    @RequestMapping("/job/{msg}")
-    public String jobRun1(@PathVariable String msg) throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
+    @RequestMapping("/job/{msg}/{fileName}")
+    public String jobRun1(@PathVariable String msg,@PathVariable String fileName) throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
         // 把接收到的参数值传给任务
         JobParameters parameters = new JobParametersBuilder()
                 .addString("msg",msg)
+                .addString("fileName",fileName)
                 .toJobParameters();
 
         // 启动任务，并把参数传给任务
