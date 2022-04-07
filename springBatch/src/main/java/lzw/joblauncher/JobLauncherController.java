@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+
 /**
  * 调用批处理任务
  *
@@ -36,6 +38,9 @@ public class JobLauncherController {
         JobParameters parameters = new JobParametersBuilder()
                 .addString("msg",msg)
                 .addString("fileName",fileName)
+                // 加入时间戳参数，使一个任务可以执行多次，JobInstance是由job的名称和执行该job的参数组成的，当执行job时，会由于参数相同
+                // 会认为是同一个job实例，如果该job已经执行过，就会抛出异常，判断job是否执行过的状态是保存到job Repository中的
+                .addDate("date",new Date())
                 .toJobParameters();
 
         // 启动任务，并把参数传给任务
