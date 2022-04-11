@@ -23,6 +23,7 @@ public class CodeGeneratorNew {
                 })
                 .packageConfig(builder -> {
                     builder.parent("com.lzw") // 设置父包名
+                            .entity("pojo") // 设置实体包名
                             .moduleName("seckill") // 设置父包模块名
                             .pathInfo(Collections.singletonMap(OutputFile.xml, "D://")); // 设置mapperXml生成路径
                 })
@@ -30,7 +31,8 @@ public class CodeGeneratorNew {
                     builder.addInclude("t_user") // 设置需要生成的表名
                             .addTablePrefix("t_", "c_"); // 设置过滤表前缀
                 })
-                .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
+                // 使用Freemarker引擎模板，默认的是Velocity引擎模板
+                .templateEngine(new FreemarkerTemplateEngine())
                 .execute();
     }
 
