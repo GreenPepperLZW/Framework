@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author : lzw
@@ -59,8 +60,37 @@ public class DemoApplicationTests {
 
         List<UserDto> records = userDtoIPage.getRecords();
         records.forEach(System.out::println);
+    }
+
+    /**
+     * 测试条件查询
+     */
+    @Test
+    public void testCondition() {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("manager_id", "1088248166370832384");
+        User user = userMapper.selectOne(queryWrapper);
+        System.out.println(user.toString());
+    }
+
+    /**
+     * 查询年龄总和与数据条数，使用Object接口
+     */
+    @Test
+    public void testReturnObject() {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.isNotNull("name")
+                .select("sum(age) as age,count(*) as count");
+        List<Map<String, Object>> maps = userMapper.selectMaps(queryWrapper);
+        Map<String, Object> map = maps.get(0);
+
+        System.out.println("年龄总和"+map.get("age"));
+        System.out.println("数据总条数"+map.get("count"));
 
 
+
+
+        System.out.println(maps);
     }
 
 

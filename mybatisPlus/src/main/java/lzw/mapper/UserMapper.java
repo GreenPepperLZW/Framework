@@ -18,5 +18,4 @@ import org.apache.ibatis.annotations.Param;
 public interface UserMapper extends BaseMapper<User> {
 
     IPage<UserDto> pageCanditionQuery(Page page, @Param(Constants.WRAPPER)Wrapper wrapper);
-
 }
