@@ -51,7 +51,7 @@ public class Test03 {
 }
 
 /**
- * @author lzw13
+ * @author lzw
  */
 @Target({ElementType.METHOD,ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
