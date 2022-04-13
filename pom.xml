@@ -10,6 +10,7 @@
         <module>springBatch</module>
         <module>mybatisPlus</module>
         <module>test</module>
+        <module>annotation</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
