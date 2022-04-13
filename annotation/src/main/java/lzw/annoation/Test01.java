@@ -1,4 +1,4 @@
-package lzw;
+package lzw.annoation;
 
 /**
  *
