@@ -1,6 +1,5 @@
 package lzw.reflection;
 
-import java.lang.annotation.Inherited;
 
 /**
  * 测试Class 类的创建方式有哪些

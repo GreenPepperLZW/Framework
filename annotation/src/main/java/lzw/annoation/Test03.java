@@ -18,7 +18,6 @@ public class Test03 {
     @MyAnnoation2(name = "张三",schools = {"清华"})
     @MyAnnoation3("aa")
     public void test() {
-
     }
 }
 
