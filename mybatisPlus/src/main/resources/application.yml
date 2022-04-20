@@ -8,3 +8,7 @@ spring:
 logging:
   level:
     com.lzw: debug
+mybatis-plus:
+  configuration:
+    # 控制在控制台打印日志默认实现类是 org.apache.ibatis.logging.nologging.NoLoggingImpl
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

@@ -1,3 +1,5 @@
+package com.lzw;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -11,8 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * @author : lzw
@@ -86,11 +90,35 @@ public class DemoApplicationTests {
 
         System.out.println("年龄总和"+map.get("age"));
         System.out.println("数据总条数"+map.get("count"));
-
-
-
-
         System.out.println(maps);
+    }
+
+    @Test
+    public void testOptionIn() {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+
+        queryWrapper.in("name",new ArrayList<String>(){{add("大boss");add("王天风");}})
+                .and(new Consumer<QueryWrapper<User>>() {
+                    @Override
+                    public void accept(QueryWrapper<User> userQueryWrapper) {
+                        userQueryWrapper.in("age",new ArrayList<String>(){{add("40");add("25");}});
+                    }
+                });
+
+        List<User> users = userMapper.selectList(queryWrapper);
+        System.out.println(users);
+
+        // SELECT id,name,age,email,manager_id FROM user WHERE (name IN ("大boss","王天风") AND (age IN (40,25)));
+
+        // SELECT * from user u WHERE (u.age,u.`name`) in ((40,"大boss"),(25,"王天风"));
+    }
+
+    @Test
+    public void testOptionIn2() {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+
+        List<User> users = userMapper.selectList(queryWrapper);
+        System.out.println(users);
     }
 
 
