@@ -11,6 +11,7 @@
         <module>mybatisPlus</module>
         <module>test</module>
         <module>annotation</module>
+        <module>annontaion2</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
