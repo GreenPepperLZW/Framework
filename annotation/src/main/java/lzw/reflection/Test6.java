@@ -51,6 +51,8 @@ class Father {
 }
 
 class Son extends Father {
+
+
     static {
         System.out.println("子类被加载");
         m = 300;

@@ -22,13 +22,11 @@ public class Test01 {
         System.out.println(c4.hashCode());
 
 
-
-
     }
 
 }
 
-class User{
+class User {
 
     private String name;
     private int age;
@@ -49,6 +47,7 @@ class User{
 
     public void setName(String name) {
         this.name = name;
+        System.out.println("设置名称：" + name);
     }
 
     public int getAge() {
