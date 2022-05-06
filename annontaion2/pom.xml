@@ -9,7 +9,11 @@
     </parent>-->
     <modelVersion>4.0.0</modelVersion>
     <description>注解驱动开发</description>
+    <!--groupId， artifactId ，version三个标签必须要有，否则会报错
+    单纯的修改pom，但是却没有任何效果，此时不会有报错信息，clean会报错-->
+    <groupId>com.lzw</groupId>
     <artifactId>annontaion2</artifactId>
+    <version>1.0</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -28,6 +32,13 @@
             <artifactId>lombok</artifactId>
             <version>1.18.22</version>
         </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+        </dependency>
+
     </dependencies>
 
 
