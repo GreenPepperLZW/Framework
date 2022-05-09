@@ -1,10 +1,11 @@
 package com.lzw.config;
 
 import com.lzw.bean.Person;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.Scope;
+import com.lzw.condition.LinuxCondition;
+import com.lzw.condition.WindowsCondition;
+import org.springframework.context.annotation.*;
+
+import javax.swing.*;
 
 /**
  * 测试Scope注解
@@ -12,6 +13,8 @@ import org.springframework.context.annotation.Scope;
  * @date : 2022/5/6
  * @since : 1.0
  */
+// Conditional作用在类上，满足条件，这个类中配置的所有bean注册都生效
+@Conditional({WindowsCondition.class})
 @Configuration
 public class MainConfig2 {
 
@@ -41,5 +44,23 @@ public class MainConfig2 {
         return new Person("张三",25);
     }
 
+    /**
+     * 测试@Conditional注解
+     * 按照一定条件进行判断，满足条件给容器中注册bean
+     *
+     * 如果是windows,给容器中注册@Bean("bill")
+     * 如果是linux，容器中注册@Bean("linus")
+     */
+    @Bean("bill")
+    @Conditional({WindowsCondition.class})
+    public Person person01() {
+        return new Person("Bill Gates", 63);
+    }
+
+    @Bean("linus")
+    @Conditional({LinuxCondition.class})
+    public Person person02() {
+        return new Person("linus", 50);
+    }
 
 }
