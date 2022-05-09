@@ -5,8 +5,6 @@ import com.lzw.condition.LinuxCondition;
 import com.lzw.condition.WindowsCondition;
 import org.springframework.context.annotation.*;
 
-import javax.swing.*;
-
 /**
  * 测试Scope注解
  * @author : lzw
