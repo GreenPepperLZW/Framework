@@ -3,10 +3,7 @@ package com.lzw.config;
 import com.lzw.bean.Color;
 import com.lzw.bean.Person;
 import com.lzw.bean.Red;
-import com.lzw.condition.LinuxCondition;
-import com.lzw.condition.MyImportBeanDefinitionRegistrar;
-import com.lzw.condition.MyImportSelector;
-import com.lzw.condition.WindowsCondition;
+import com.lzw.condition.*;
 import org.springframework.context.annotation.*;
 
 /**
@@ -71,9 +68,17 @@ public class MainConfig2 {
      * 1.包扫描+组件标注注解(@Controller/@Service/@Repository/@Component)
      * 2.@Bean【导入第三方包里面的组件】
      * 3.@Import【快速给容器中导入一个组件，springBoot自动配置中大量使用该注解】
-     *     1).@Import(要导入到容器中的组件)：容器中就会自动注册这个组件，id默认是全类名
-     *     2).@ImportSelector：返回需要导入的组件的全类名数组，批量导入
-     *     3).@ImportBeanDefinitionRegistrar
+     * 1).@Import(要导入到容器中的组件)：容器中就会自动注册这个组件，id默认是全类名
+     * 2).@ImportSelector：返回需要导入的组件的全类名数组，批量导入
+     * 3).@ImportBeanDefinitionRegistrar
+     * 4.使用spring提供的FactoryBean(工厂bean)
+     *      1).默认获取到的是工厂bean调用getObject创建的对象
+     *      2).要获取工厂bean本身，我们需要给id前面加一个 & 符号
      */
+
+    @Bean
+    public ColorFactoryBean colorFactoryBean() {
+        return new ColorFactoryBean();
+    }
 
 }
