@@ -1,5 +1,6 @@
 package com.lzw.test;
 
+import com.lzw.bean.Blue;
 import com.lzw.bean.Person;
 import com.lzw.config.MainConfig2;
 import org.junit.Test;
@@ -69,6 +70,9 @@ public class IOCTest {
     @Test
     public void test03() {
         printBeans(applicationContext);
+        // 获取使用ImportSelector导入到组件中的bean信息
+        Blue bean = applicationContext.getBean(Blue.class);
+        System.out.println(bean);
     }
 
 
