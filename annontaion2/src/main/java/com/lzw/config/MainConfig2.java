@@ -1,7 +1,10 @@
 package com.lzw.config;
 
+import com.lzw.bean.Color;
 import com.lzw.bean.Person;
+import com.lzw.bean.Red;
 import com.lzw.condition.LinuxCondition;
+import com.lzw.condition.MyImportSelector;
 import com.lzw.condition.WindowsCondition;
 import org.springframework.context.annotation.*;
 
@@ -14,6 +17,7 @@ import org.springframework.context.annotation.*;
 // Conditional作用在类上，满足条件，这个类中配置的所有bean注册都生效
 @Conditional({WindowsCondition.class})
 @Configuration
+@Import({Color.class, Red.class, MyImportSelector.class})
 public class MainConfig2 {
 
     // 默认注册的组件都是单实例的
@@ -60,5 +64,14 @@ public class MainConfig2 {
     public Person person02() {
         return new Person("linus", 50);
     }
+
+    /**
+     * 给容器中注册组件的方式：
+     * 1.包扫描+组件标注注解(@Controller/@Service/@Repository/@Component)
+     * 2.@Bean【导入第三方包里面的组件】
+     * 3.@Import【快速给容器中导入一个组件，springBoot自动配置中大量使用该注解】
+     *     1).@Import(要导入到容器中的组件)：容器中就会自动注册这个组件，id默认是全类名
+     *     2).@ImportSelector：返回需要导入的组件的全类名数组
+     */
 
 }

@@ -1,7 +1,6 @@
 package com.lzw.test;
 
 import com.lzw.bean.Person;
-import com.lzw.config.MainConfig;
 import com.lzw.config.MainConfig2;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -18,6 +17,14 @@ import java.util.Map;
 public class IOCTest {
 
     ApplicationContext applicationContext = new AnnotationConfigApplicationContext(MainConfig2.class);
+
+
+    public void printBeans(ApplicationContext applicationContext) {
+        String[] definitionNames = applicationContext.getBeanDefinitionNames();
+        for (String definitionName : definitionNames) {
+            System.out.println(definitionName);
+        }
+    }
 
     /**
      * 测试@Scope和@Lazy 注解
@@ -40,6 +47,7 @@ public class IOCTest {
      */
     @Test
     public void test02() {
+
         // 获取操作系统的名字
         Environment environment = applicationContext.getEnvironment();
         String property = environment.getProperty("os.name");
@@ -52,6 +60,15 @@ public class IOCTest {
 
         Map<String, Person> persons = applicationContext.getBeansOfType(Person.class);
         System.out.println(persons);
+    }
+
+
+    /**
+     * 测试@Import组件
+     */
+    @Test
+    public void test03() {
+        printBeans(applicationContext);
     }
 
 
