@@ -2,6 +2,7 @@ package com.lzw.test;
 
 import com.lzw.bean.Blue;
 import com.lzw.bean.Person;
+import com.lzw.bean.RainBow;
 import com.lzw.config.MainConfig2;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -70,9 +71,13 @@ public class IOCTest {
     @Test
     public void test03() {
         printBeans(applicationContext);
-        // 获取使用ImportSelector导入到组件中的bean信息
+        // 获取使用ImportSelector导入到容器中的bean信息
         Blue bean = applicationContext.getBean(Blue.class);
-        System.out.println(bean);
+        System.out.println("Blue："+bean);
+
+        // 获取使用ImportBeanDefinitionRegistrar注册到容器中的bean信息
+        RainBow bean1 = applicationContext.getBean(RainBow.class);
+        System.out.println("RainBow："+bean1);
     }
 
 
