@@ -33,7 +33,7 @@ public class LinuxCondition implements Condition {
 
         // 可以判断容器中的注册情况，也可以给容器中注册bean
         if (registry.containsBeanDefinition("person")) {
-            return true;
+//            return true;
         }
 
         return false;
