@@ -73,17 +73,17 @@ public class IOCTest {
         printBeans(applicationContext);
         // 获取使用ImportSelector导入到容器中的bean信息
         Blue bean = applicationContext.getBean(Blue.class);
-        System.out.println("Blue："+bean);
+        System.out.println("Blue：" + bean);
 
         // 获取使用ImportBeanDefinitionRegistrar注册到容器中的bean信息
         RainBow bean1 = applicationContext.getBean(RainBow.class);
-        System.out.println("RainBow："+bean1);
+        System.out.println("RainBow：" + bean1);
 
         // 使用工厂创建的bean
         Object colorFactoryBean = applicationContext.getBean("colorFactoryBean");
-        System.out.println("colorFactoryBean的类型："+colorFactoryBean.getClass());
+        System.out.println("colorFactoryBean的实际类型：" + colorFactoryBean.getClass());
 
-        // 获取实际的colorFactoryBean
+        // 获取实际的colorFactoryBean（联想到Mybatis中的sqlSessionFactoryBean）
         Object colorFactoryBean2 = applicationContext.getBean("&colorFactoryBean");
         System.out.println(colorFactoryBean2);
     }

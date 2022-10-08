@@ -15,18 +15,19 @@ public class MyImportBeanDefinitionRegistrar implements ImportBeanDefinitionRegi
 
     /**
      * @param importingClassMetadata 当前类{@link com.lzw.config.MainConfig2}的所有注解信息
-     * @param registry               current bean definition registry BeanDefinition注册类
+     * @param registry               current bean definition registry BeanDefinition注册类，所有bean的定义都由BeanDefinitionRegistry进行注册
      *                               把所有需要添加到容器中的bean,调用 BeanDefinitionRegistry.registerBeanDefinition 方法手动注册
      */
     @Override
     public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
         boolean red = registry.containsBeanDefinition("com.lzw.bean.Red");
         boolean blue = registry.containsBeanDefinition("com.lzw.bean.Blue");
+        // 判断在IOC容器中是否有red和blue这两个bean
         if (red && blue) {
             // 手动注册一个bean
-            // 指定bena名，bean的定义信息
             RootBeanDefinition rootBeanDefinition = new RootBeanDefinition(RainBow.class);
-            registry.registerBeanDefinition("rainBow",rootBeanDefinition);
+            // 指定bena名，bean的定义信息
+            registry.registerBeanDefinition("rainBow", rootBeanDefinition);
         }
     }
 }

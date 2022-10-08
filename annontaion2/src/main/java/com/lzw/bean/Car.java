@@ -11,11 +11,17 @@ public class Car {
         System.out.println("Car constructor.....");
     }
 
+    /**
+     * 自定义初始化方法
+     */
     public void init() {
         System.out.println("Car... init....");
     }
 
-    public void  destroy() {
+    /**
+     * 自定义销毁方法
+     */
+    public void destroy() {
         System.out.println("Car... destroy....");
     }
 

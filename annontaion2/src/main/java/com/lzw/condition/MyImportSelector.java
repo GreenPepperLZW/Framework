@@ -14,13 +14,11 @@ public class MyImportSelector implements ImportSelector {
 
     /**
      * @param importingClassMetadata 当前标注了@Import注解的类{@link com.lzw.config.MainConfig2}的所有注解信息
-     * @return 导入到容器中的组件全类名
+     * @return 返回值就是要导入到容器中的组件全类名
      */
     @Override
     public String[] selectImports(AnnotationMetadata importingClassMetadata) {
-
-
-        // 不能返回null值，否则会报错空指针异常
+        // 不能返回null值，否则会报错空指针异常，可以返回空数组
         return new String[]{"com.lzw.bean.Blue", "com.lzw.bean.Yellow"};
     }
 }
