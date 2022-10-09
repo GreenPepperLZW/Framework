@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 将后置处理器加入到容器进行工作，将会对当前容器中扫描到的所有的bean都进行处理
- *
+ * 执行时间：对象创建完成，属性赋值和初始化之前执行
  * @author : lzw
  * @date : 2022/5/11
  * @since : 1.0
