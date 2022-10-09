@@ -1,10 +1,7 @@
 package com.lzw.config;
 
-import com.lzw.bean.BookService;
 import com.lzw.bean.Person;
 import org.springframework.context.annotation.*;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 
 /**
  * 使用配置类替代配置文件
@@ -40,9 +37,9 @@ import org.springframework.stereotype.Service;
 
 //  ComponentScans可以包含多条规则
 @ComponentScans({
-    @ComponentScan(value = "com.lzw",includeFilters = {
-            @ComponentScan.Filter(type = FilterType.CUSTOM,classes = MyTypeFilter.class)
-    },useDefaultFilters = false)
+        @ComponentScan(value = "com.lzw", includeFilters = {
+                @ComponentScan.Filter(type = FilterType.CUSTOM, classes = MyTypeFilter.class)
+        }, useDefaultFilters = false)
 })
 
 public class MainConfig {
@@ -56,6 +53,6 @@ public class MainConfig {
      */
     @Bean
     public Person person() {
-        return new Person("李四", 20);
+        return new Person("李四", 20, "");
     }
 }
