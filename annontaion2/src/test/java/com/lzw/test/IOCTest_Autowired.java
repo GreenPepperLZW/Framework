@@ -1,7 +1,7 @@
 package com.lzw.test;
 
-import com.lzw.bean.BookDao;
 import com.lzw.bean.BookService;
+import com.lzw.bean.Boss;
 import com.lzw.config.MainConfigOfAutowired;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -23,8 +23,12 @@ public class IOCTest_Autowired {
         bean.print();
         System.out.println(bean.toString());
 
-        BookDao bookDao = applicationContext.getBean(BookDao.class);
+        /*BookDao bookDao = applicationContext.getBean(BookDao.class);
         System.out.println(bookDao);
+        */
+        Boss bean1 = applicationContext.getBean(Boss.class);
+        System.out.println(bean1);
+
 
         applicationContext.close();
 

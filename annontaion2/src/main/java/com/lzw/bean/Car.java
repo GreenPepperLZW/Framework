@@ -1,10 +1,13 @@
 package com.lzw.bean;
 
+import org.springframework.stereotype.Component;
+
 /**
  * @author : lzw
  * @date : 2022/5/11
  * @since : 1.0
  */
+@Component
 public class Car {
 
     public Car() {

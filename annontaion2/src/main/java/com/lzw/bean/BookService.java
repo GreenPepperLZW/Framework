@@ -1,7 +1,6 @@
 package com.lzw.bean;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class BookService {
 
-    @Qualifier("bookDao2")
+    //    @Qualifier("bookDao2")
     @Autowired(required = false)
     private BookDao bookDao;
 
