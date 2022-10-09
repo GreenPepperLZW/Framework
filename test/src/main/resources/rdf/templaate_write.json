@@ -1,8 +1,8 @@
 {
-  "head":[
+  "head": [
     "fileStart|数据文件头部字符|default:汇总文件测试"
   ],
-  "body":[
+  "body": [
     "seq|流水号",
     "instSeq|基金公司订单号|Required",
     "gmtApply|订单申请时间|Date:yyyy-MM-dd HH:mm:ss",
@@ -15,13 +15,13 @@
     "bol|布尔值|Boolean",
     "memo|备注"
   ],
-  "tail":[
+  "tail": [
     "totalCount|总笔数|Required|Integer",
     "totalAmount|总金额|BigDecimal|Required"
   ],
-  "protocol":"SP",
-  "lineBreak":"\r\n",
-  "summaryColumnPairs":[
+  "protocol": "batch_file_up",
+  "lineBreak": "\r\n",
+  "summaryColumnPairs": [
     "totalAmount|amount"
   ]
 }

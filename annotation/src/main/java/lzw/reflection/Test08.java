@@ -13,7 +13,7 @@ import java.lang.reflect.Method;
  */
 public class Test08 {
 
-    public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException {
+    public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException {
         Class c1 = Class.forName("lzw.reflection.User");
 
         // 获取类的名字 包名 + 类名
@@ -33,6 +33,9 @@ public class Test08 {
         fields = c1.getDeclaredFields();
         for (Field field : fields) {
             System.out.println(field);
+            field.setAccessible(true);
+            System.out.println("=========" + field.get(c1));
+
         }
 
         // 获取本类及其父类的public方法
@@ -67,7 +70,7 @@ public class Test08 {
             System.out.println(constructor);
         }
         Constructor declaredConstructor = c1.getDeclaredConstructor(String.class, int.class, int.class);
-        System.out.println("指定构造器"+declaredConstructor);
+        System.out.println("指定构造器" + declaredConstructor);
 
 
     }

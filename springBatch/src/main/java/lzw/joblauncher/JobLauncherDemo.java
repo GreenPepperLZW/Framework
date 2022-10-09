@@ -24,12 +24,13 @@ import javax.sql.DataSource;
 
 /**
  * 测试jobLauncher调度器的使用
+ *
  * @author : lzw
  * @date : 2022/3/2
  * @since : 1.0
  */
 @Configuration
-public class JobLauncherDemo{
+public class JobLauncherDemo {
 
     @Autowired
     private JobBuilderFactory jobBuilderFactory;
@@ -37,27 +38,40 @@ public class JobLauncherDemo{
     @Autowired
     private StepBuilderFactory stepBuilderFactory;
 
+//    private ItemProcessor<Customer, Customer> jobLauncherProcessor;
+
+
     @Autowired
     private DataSource dataSource;
 
-    private static final String msg = null;
-
+    /*@Autowired
+    private MyItemProcessorLister myItemProcessorLister;*/
 
     @Bean
     public Job jobLauncherDemoJob(Step jobLauncherDemoStep) {
         return jobBuilderFactory.get("jobLauncherDemoJob")
                 .start(jobLauncherDemoStep)
+                .listener(new MyLauncherJobListener())
                 .build();
     }
 
     @Bean
     public Step jobLauncherDemoStep(@Qualifier("itemLauncherReader") FlatFileItemReader<Customer> reader,
-                                    @Qualifier("itemLauncherWriterDb") JdbcBatchItemWriter<Customer> writer) {
+                                    @Qualifier("itemLauncherWriterDb") JdbcBatchItemWriter<Customer> writer,
+                                    @Qualifier("firstNameUpperJobLauncherProcessor") FirstNameUpperJobLauncherProcessor jobLauncherProcessor) {
         return stepBuilderFactory.get("jobLauncherDemoStep")
                 .<Customer, Customer>chunk(5)
                 .reader(reader)
+                .processor(jobLauncherProcessor)
                 .writer(writer)
+                .listener(new MyItemProcessorLister())
                 .build();
+    }
+
+    @StepScope
+    @Bean("firstNameUpperJobLauncherProcessor")
+    public FirstNameUpperJobLauncherProcessor jobLauncherProcessor(@Value("#{jobParameters[order]}") Long order) {
+        return new FirstNameUpperJobLauncherProcessor(order);
     }
 
     @Bean(name = "itemLauncherWriterDb")
@@ -73,24 +87,23 @@ public class JobLauncherDemo{
     }
 
 
-
     @Bean(name = "itemLauncherReader")
     @StepScope
     public FlatFileItemReader<Customer> itemLauncherReader(@Value("#{jobParameters[msg]}") String msg) {
-        System.out.println("=========参数："+msg);
-         return new FlatFileItemReaderBuilder<Customer>()
+        System.out.println("=========参数：" + msg);
+        return new FlatFileItemReaderBuilder<Customer>()
                 .name("itemLauncherReader")
-                 .resource(new ClassPathResource("customer.txt"))
+                .resource(new ClassPathResource("customer.txt"))
                 .delimited()
                 .delimiter("|")
-                .names(new String[]{"id", "fistName", "lastName", "birthday"})
+                .names(new String[]{"id", "fistName", "lastName", "birthday", ""})
                 .fieldSetMapper(new CustFileSetMapper())
                 .linesToSkip(1)
                 .build();
 
     }
 
-    public class CustFileSetMapper implements FieldSetMapper<Customer>{
+    public class CustFileSetMapper implements FieldSetMapper<Customer> {
 
         @Override
         public Customer mapFieldSet(FieldSet fieldSet) throws BindException {

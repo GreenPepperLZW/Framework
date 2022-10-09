@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 
 /**
  * 通过反射动态的创建对象
+ *
  * @author : lzw
  * @date : 2022/4/30
  * @since : 1.0
@@ -37,9 +38,8 @@ public class Test09 {
         Field name = c1.getDeclaredField("name");
         // 不能直接操作私有属性或私有方法，关闭安全检测
         name.setAccessible(true);
-        name.set(user4,"张三");
-        System.out.println("name属性值"+user4.getName());
-
+        name.set(user4, "张三");
+        System.out.println("name属性值" + user4.getName());
 
 
     }

@@ -1,0 +1,16 @@
+<protocol name="batch_file_up" rowsplit="rowSplitByFixedlLengthAndSeparator">
+    <head>
+        <row>
+            <column>
+                <output>${column.value()}</output>
+            </column>
+        </row>
+    </head>
+    <body>
+        <row>
+            <column>
+                <output>${column.value()}</output>
+            </column>
+        </row>
+    </body>
+</protocol>

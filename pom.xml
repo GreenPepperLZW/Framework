@@ -12,6 +12,8 @@
         <module>test</module>
         <module>annotation</module>
         <module>annontaion2</module>
+        <module>quartzTask</module>
+        <module>DataStructures</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

@@ -1,4 +1,4 @@
-package ref;
+package rdf;
 
 import cn.hutool.core.date.DateUtil;
 import com.alipay.rdf.file.interfaces.FileFactory;
@@ -26,21 +26,24 @@ public class RdfTest {
 
     /**
      * 使用rdf-file-corejar包处理模板化文件，读取文件过程累加配置汇总字段， 一般用于校验文件总笔数，总金额是否正确
+     * 根据模板读取文件
+     * 文档：https://github.com/alipay/rdf-file/wiki
      */
     @Test
     public void test1() {
         FileConfig config = new FileConfig("D:\\Code\\framework\\test\\src\\main\\resources\\file\\file.txt", "/rdf/template_1.json", new StorageConfig("nas"));
         config.setSummaryEnable(true); // 开启汇总字段汇总功能
+        config.setColumnSplit("|");
         FileReader fileReader = FileFactory.createReader(config);
         try {
             Map<String, Object> head = fileReader.readHead(HashMap.class);
             // 总金额
-            BigDecimal totalAmount = (BigDecimal)head.get("totalAmount");
+            BigDecimal totalAmount = (BigDecimal) head.get("totalAmount");
             // 总笔数
-            BigDecimal totalCount = (BigDecimal)head.get("totalAmount");
+            BigDecimal totalCount = (BigDecimal) head.get("totalAmount");
             System.out.println();
             // 获取总比数
-            Map<String, Object> row1= fileReader.readRow(HashMap.class);
+            Map<String, Object> row1 = fileReader.readRow(HashMap.class);
             System.out.println(row1.size());
 
             Map<String, Object> tail = fileReader.readTail(HashMap.class);
@@ -50,13 +53,13 @@ public class RdfTest {
             }
             Summary summary = fileReader.getSummary();
             for (SummaryPair pair : summary.getHeadSummaryPairs()) {
-                BigDecimal  summaryValue = (BigDecimal) pair.getSummaryValue(); //数据字段汇总后的值
+                BigDecimal summaryValue = (BigDecimal) pair.getSummaryValue(); //数据字段汇总后的值
                 BigDecimal headValue = (BigDecimal) pair.getHeadValue(); //文件头中的汇总值
                 // 汇总的值是否一致，一致时返回true
                 boolean summaryEquals = pair.isSummaryEquals();
-                System.out.println("summaryValue"+summaryValue);
-                System.out.println("headValue"+headValue);
-                System.out.println("汇总的值是否一致"+summaryEquals);
+                System.out.println("summaryValue" + summaryValue);
+                System.out.println("headValue" + headValue);
+                System.out.println("汇总的值是否一致" + summaryEquals);
             }
 
         } finally {
@@ -70,8 +73,9 @@ public class RdfTest {
     @Test
     public void test2() {
         String filePath = "D:\\Code\\framework\\test\\src\\main\\resources\\file";
-        FileConfig config = new FileConfig(new File(filePath, "test.txt").getAbsolutePath(),"/rdf/templaate_write.json", new StorageConfig("nas"));
+        FileConfig config = new FileConfig(new File(filePath, "test.txt").getAbsolutePath(), "/rdf/templaate_write.json", new StorageConfig("nas"));
         config.setSummaryEnable(true); //启动汇总功能
+        config.setColumnSplit("");
         FileWriter fileWriter = FileFactory.createWriter(config);
         try {
             // 头使用数据定义模板的常量
