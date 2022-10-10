@@ -1,12 +1,12 @@
 package com.lzw.test;
 
-import com.lzw.bean.Car;
 import com.lzw.config.MainConfigOfLifeCycle;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
+ * 测试bean的各个生命周期执行过程
+ *
  * @author : lzw
  * @date : 2022/5/11
  * @since : 1.0

@@ -8,6 +8,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
+ * 测试属性自动注入
+ *
  * @author : lzw
  * @date : 2022/10/09
  * @since : 1.0
