@@ -23,7 +23,7 @@ public class IOCTest_AOP {
         MathCalculator bean = applicationContext.getBean(MathCalculator.class);
         bean.div(1, 1);
         System.out.println("==============");
-        bean.div(1, 0);
+//        bean.div(1, 0);
         applicationContext.close();
 
     }

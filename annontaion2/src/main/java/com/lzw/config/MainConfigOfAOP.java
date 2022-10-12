@@ -70,13 +70,132 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  *              beanFactory.getBean(CONVERSION_SERVICE_BEAN_NAME, ConversionService.class));
  *                 ->doGetBean()-> Object sharedInstance = getSingleton(beanName)->createBean();
  *              2)、创建bean
+ *                  首先搞清楚两个后置处理的执行时间
+ *              【BeanPostProcessor是在Bean对象创建完成初始化前后调用】
+ *              【InstantiationAwareBeanPostProcessor是在创建Bean实例之前先尝试用后置处理器返回对象的】
  *                  1)、先从缓存中获取bean，如果能获取到，说明bean之前被创建过，直接使用，否则再去创建，只要创建好的bean，都会被缓存起来
  *                  2)、createBean(),创建bean的过程
- *                      1)、resolveBeforeInstantiation(beanName, mbdToUse);
+ *                      1)、resolveBeforeInstantiation(beanName, mbdToUse);让BeanPostProcessors有机会返回一个代理，而不是目标bean实例。
+ *                          希望后置处理器在此能返回一个代理对象，如果能返回代理对象就使用，如果不能就继续往下走。
+ *                          主要执行过程
+ *                          bean = applyBeanPostProcessorsBeforeInstantiation(targetType, beanName);
+ *                          ----->
+         *                      if (bp instanceof InstantiationAwareBeanPostProcessor) {
+                                    InstantiationAwareBeanPostProcessor ibp = (InstantiationAwareBeanPostProcessor) bp;
+                                    Object result = ibp.postProcessBeforeInstantiation(beanClass, beanName);
+                                    if (result != null) {
+                                        return result;
+                                    }
+                                }
+                             所以
+                            【AnnotationAwareAspectJAutoProxyCreator在所有bean创建之前都会有一个拦截，应为它的父类实现了InstantiationAwareBeanPostProcessor
+                            ，会调用AbstractAutoProxyCreator父类中的postProcessBeforeInstantiation方法】
+                         2)、【AnnotationAwareAspectJAutoProxyCreator组件的作用，它是InstantiationAwareBeanPostProcessor类型的后置处理器】
+                         作用：在每一个bean创建之前，调用postProcessBeforeInstantiation方法，
+                         debug调试案例中MathCalculator和LogAspects这两个类在postProcessBeforeInstantiation方法中的创建过程。
+                            1)、
+                                if (beanName == null || !this.targetSourcedBeans.contains(beanName)) {
+                                    if (this.advisedBeans.containsKey(cacheKey)) {
+                                        return null;
+                                    }
+                                    if (isInfrastructureClass(beanClass) || shouldSkip(beanClass, beanName)) {
+                                        this.advisedBeans.put(cacheKey, Boolean.FALSE);
+                                        return null;
+                                    }
+                                }
+                                对于以上两个判断的解读
+                                1.判断当前bean是否在advisedBeans中（保存了所有需要增强的bean）
+                                2.判断当前bean是否是基础类型的Advice、Pointcut、Advisor、AopInfrastructureBean，即当前bean是否实现了这些类
+                                或者是否加了@Aspect注解，即判断当前类是不是切面，源码中的判断逻辑如下代码所示
+                                【
+                                    private boolean hasAspectAnnotation(Class<?> clazz) {
+                                        return (AnnotationUtils.findAnnotation(clazz, Aspect.class) != null);
+                                    }
+                                】
+                                3.是否需要跳过，shouldSkip()
+                                    shouldSkip()方法里的逻辑：
+                                    获取候选的增强器（即切面里的通知方法），如果增强器的类型是AspectJPointcutAdvisor，则返回true，debug调试中看到LogAspects类中定义的增强器的类型都为InstantiationModelAwarePointcutAdvisor，调用父类方法返回false
+                            2)、debug调试案例中MathCalculator和LogAspects这两个类在【AbstractAutoProxyCreator类中】postProcessAfterInitialization方法中的执行过程。
+                                return wrapIfNecessary(bean, beanName, cacheKey);//如果需要的话将该类进行包装
+                                1)、
+                                    //获取当前类的所有增强器（定义的aop通知方法）
+                                    bject[] specificInterceptors = getAdvicesAndAdvisorsForBean(bean.getClass(), beanName, null);
+                                    1.找到候选的所有增强器（找到哪些通知方法是需要切入到当前bean方法的）
+                                    2.获取到能在当前bean中使用的增强器
+                                    3.给增强器排序
+                                2)、保存当前bean在advisedBeans全局集合中(需要进行增强的bean集合)
+                                3)、如果当前bean需要增强，创建bean的代理对象；
+                                    1.获取所有增强器（通知方法）
+                                    2.保存到proxyFactory中
+                                    3.创建代理对象，jdK代理h
+                                        JdkDynamicAopProxy
+                                        ObjenesisCglibAopProxy
+                                关键代码如下
+                                【
+                                public AopProxy createAopProxy(AdvisedSupport config) throws AopConfigException {
+                                    if (config.isOptimize() || config.isProxyTargetClass() || hasNoUserSuppliedProxyInterfaces(config)) {
+                                        Class<?> targetClass = config.getTargetClass();
+                                        if (targetClass == null) {
+                                            throw new AopConfigException("TargetSource cannot determine target class: " +
+                                                    "Either an interface or a target is required for proxy creation.");
+                                        }
+                                        if (targetClass.isInterface() || Proxy.isProxyClass(targetClass)) {
+                                            return new JdkDynamicAopProxy(config);
+                                        }
+                                        return new ObjenesisCglibAopProxy(config);
+                                    }
+                                    else {
+                                        return new JdkDynamicAopProxy(config);
+                                    }
+                                }
+                                】
+
+                                4)、所以返回到容器中的bean是已经增强过了的代理对象
+                                5)、以后容器中获取到的就是这个组件的代理对象，执行目标方法的时候，代理对象就会执行通知方法的流程
+
+                            3)、目标方法执行：
+                                容器中保存了组件的代理对象(增强后的对象)，这个对象里保存了详细信息（比如增强器，目标对象）
+                                1)、执行目标方法之前会执行CglibAopProxy.intercept();cglib拦截目标方法的执行
+                                2)、主要逻辑
+                                    根据ProxyFactory对象获取将要执行的目标方法的拦截器（将advice转为MethodInterceptor）
+                                    List<Object> chain = this.advised.getInterceptorsAndDynamicInterceptionAdvice(method, targetClass);
+
+                                3)、如果拦截器链为空，则直接执行目标方法
+                                4)、如果有拦截器链，把需要执行的目标对象、目标方法、拦截器链的信息传入创建一个叫CglibMethodInvocation的对象
+                                并调用proceed();方法
+                                5)、拦截器链的触发过程
+                                    1)、如果没有拦截器执行目标方法，或者执行到了最后一个拦截器则去执行目标方法
+                                    2)、链式获取每一个拦截器，拦截器执行invoke方法，每一个拦截器等待下一个拦截器执行完成返回以后再来执行
+                                        拦截器的机制，保证通知方法与目标方法的执行顺序
+
+ *                      2)、doCreateBean(beanName, mbdToUse, args);真正的创建bean实例和3.6流程一样
+ *
+ * 总结：
+ *      1)、@EnableAspectJAutoProxy 开启AOP功能
+ *      2)、@EnableAspectJAutoProxy 会给容器注册一个AnnotationAwareAspectJAutoProxyCreator
+ *      3)、AnnotationAwareAspectJAutoProxyCreator是一个bean在初始化之前进行拦截
+ *      4)、容器的创建流程
+ *          1)、registerBeanPostProcessors()方法注册后置处理器AnnotationAwareAspectJAutoProxyCreator
+ *          2)、finishBeanFactoryInitialization(beanFactory);，初始化剩下的单实例bean
+ *              创建业务逻辑组件和切面组件
+ *          3)、AnnotationAwareAspectJAutoProxyCreator会拦截创建组件的创建过程
+ *          4)、组件创建完后，判断组件是否需要增强
+                如果需要：将切面的通知方法，包装成增强器（Advisor）；给业务逻辑组件创建一个代理对象（默认cglib代理）
+        5)、执行目标方法
+            1)、代理对象执行目标方法
+            2)、CglibAopProxy.intercept()
+                1)、得到目标方法的拦截器链（增强器包装成连接器）
+                2)、利用拦截器的链式机制，依次进入每一个拦截器执行方法
+                3)、效果
+                    正常执行：前置通知->目标方法->后置通知->返回通知
+                    异常执行：前置通知->目标方法->后置通知->异常通知
+ *
  */
 /**
- * 以下注释主要是方便查看各个类的具体内容和位置
+ * ===============================================================
+ * 以下注释主要是方便查看笔记AOP原理第二步中各个类的具体内容和位置
  * 1.
+ *
  * @see org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator
  * 重写了父类AbstractAdvisorAutoProxyCreator中的initBeanFactory方法
  * {@link org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator#initBeanFactory(org.springframework.beans.factory.config.ConfigurableListableBeanFactory)}
