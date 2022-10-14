@@ -34,6 +34,19 @@ import org.springframework.context.annotation.Configuration;
  *              org.springframework.context.event.ContextRefreshedEvent:容器刷新完成，Spring会发布这个事件
  *              org.springframework.context.event.ContextClosedEvent：容器关闭会发布事件
  *      4)、发布一个事件
+ *      5)、原理
+ *          debug调试执行过程，从ioc容器启动开始
+ *          refresh()->finishRefresh();->publishEvent(new ContextRefreshedEvent(this))->publishEvent(event, null);->getApplicationEventMulticaster().multicastEvent(applicationEvent, eventType);
+ *              ->invokeListener(listener, event);->doInvokeListener(listener, event);->listener.onApplicationEvent(event);
+ *          1)、获取到事件多播器：getApplicationEventMulticaster()
+ *          2)、multicastEvent(applicationEvent, eventType)，派发事件
+ *              获取到所有的ApplicationListener，for循环进行操作，如果有Executor，则异步执行，否则同步执行
+ *              拿到listener回调onApplicationEvent方法
+ *      【事件多播器创建过程】
+ *          ioc容器启动调用refresh()方法时会执行initApplicationEventMulticaster()方法进行创建
+ *      【容器中有哪些监听器】
+ *          ioc容器启动调用refresh()方法时会执行registerListeners()方法，从容器中获取所有的监听器，把他们注册到ApplicationEventMulticaster（派发器）中
+ *
  */
 
 /**
