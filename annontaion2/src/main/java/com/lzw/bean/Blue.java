@@ -11,6 +11,7 @@ public class Blue {
     private int age;
 
     public Blue() {
+        System.out.println("Blue...constructor");
     }
 
     public Blue(String name, int age) {
