@@ -32,7 +32,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  * AOP原理：【查看给容器中注册了什么组件，这个组件什么时候工作，这个组件工作时候的功能是什么】
  *  1.@EnableAspectJAutoProxy是什么？
  *      @EnableAspectJAutoProxy导入一个AspectJAutoProxyRegistrar.class组件，利用AspectJAutoProxyRegistrar向容器中注册组件
- *      在AspectJAutoProxyRegistrar中，当internalAutoProxyCreator这个bean不存在时,就注册一个叫AnnotationAwareAspectJAutoProxyCreator的bean(注解装配模式的AspectJ自动代理创建器)
+ *      在AspectJAutoProxyRegistrar中，创建一个名字为internalAutoProxyCreator,类型为AnnotationAwareAspectJAutoProxyCreator的bean(注解装配模式的AspectJ自动代理创建器)
  *
  * 2.AnnotationAwareAspectJAutoProxyCreator
  *  AnnotationAwareAspectJAutoProxyCreator
