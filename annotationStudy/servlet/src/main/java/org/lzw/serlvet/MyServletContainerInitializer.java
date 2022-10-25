@@ -2,11 +2,9 @@ package org.lzw.serlvet;
 
 import org.lzw.service.UserService;
 
-import javax.servlet.ServletContainerInitializer;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration;
+import javax.servlet.*;
 import javax.servlet.annotation.HandlesTypes;
+import java.util.EnumSet;
 import java.util.Set;
 
 /**
@@ -42,6 +40,15 @@ public class MyServletContainerInitializer implements ServletContainerInitialize
         ServletRegistration.Dynamic servlet = sc.addServlet("userServlet", new UserServlet());
         //配置servlet的映射信息
         servlet.addMapping("/user");
+
+        //注册Listener
+        sc.addListener(UserListener.class);
+
+        //注册Filter  FilterRegistration
+        FilterRegistration.Dynamic filter = sc.addFilter("userFilter", UserFilter.class);
+        //配置Filter的映射信息
+        filter.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/*");
+
 
     }
 }
