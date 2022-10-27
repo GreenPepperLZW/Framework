@@ -22,4 +22,11 @@ public class HelloController {
     public String hello() {
         return helloService.sayHello("小明");
     }
+
+    // 返回jsp页面
+    // /WEB-INF/views/success.jsp
+    @RequestMapping("suc")
+    public String success() {
+        return "success";
+    }
 }
