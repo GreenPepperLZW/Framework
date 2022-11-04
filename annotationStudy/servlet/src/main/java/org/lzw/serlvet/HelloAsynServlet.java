@@ -30,14 +30,15 @@ public class HelloAsynServlet extends HttpServlet {
         startAsync.start(() -> {
             try {
                 sayHello();
-                // 声明异步调用结束
-                startAsync.complete();
                 // 获取异步的上下文
                 AsyncContext asyncContext = req.getAsyncContext();
                 // 获取响应
                 ServletResponse response = asyncContext.getResponse();
                 response.getWriter().write("hello async...");
+                // 声明异步调用结束
+                startAsync.complete();
             } catch (Exception e) {
+                System.out.println(e);
                 throw new RuntimeException(e);
             }
         });
