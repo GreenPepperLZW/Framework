@@ -1,2 +1,37 @@
 server:
   port: 9091
+
+mycar:
+  brand: BYD
+  price: 100000
+
+
+person:
+  userName: 张三
+  boss: true
+  birth: 2019/12/9
+  age: 18
+  # 行内写法
+  #  interests: [ 唱,跳,rap,篮球 ]
+  interests:
+    - 唱
+    - 跳
+    - rap
+    - 篮球
+  animal: [ 龙,蛇,虎,兔 ]
+  #  score:
+  #    english: 80
+  #    math: 90
+  score: { english:80,math:90 }
+  salary: [ 12345,45678,985334 ]
+  pet:
+    name: 狗
+    weight: 20.01
+  #map的值为对象集合
+  allPets:
+    sick:
+      - { name: 猴,weight: 111 }
+      - { name: 鸡,weight: 50.09 }
+      - name: 狗
+        weight: 42
+    health: [ { name: 马,weight: 100 },{ name: 羊,weight: 89 } ]
