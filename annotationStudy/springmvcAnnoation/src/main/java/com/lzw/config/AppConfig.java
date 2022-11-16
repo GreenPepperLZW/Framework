@@ -27,7 +27,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     }
 
     // 配置静态资源访问
-
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();

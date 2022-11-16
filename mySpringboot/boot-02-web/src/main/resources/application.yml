@@ -1,1 +1,8 @@
-
+spring:
+  mvc:
+    # 静态资源的特定访问前缀
+    static-path-pattern: /res/**
+  web:
+    resources:
+      # 指定静态资源访问文件夹
+      static-locations: [ /abc/ ]
