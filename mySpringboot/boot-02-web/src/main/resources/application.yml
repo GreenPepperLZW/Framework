@@ -1,8 +1,10 @@
 spring:
-  mvc:
-    # 静态资源的特定访问前缀
-    static-path-pattern: /res/**
+  #  mvc:
+  #    # 静态资源的特定访问前缀，该配置会影响欢迎页与网站图标显示
+  #    static-path-pattern: /res/**
   web:
     resources:
       # 指定静态资源访问文件夹
-      static-locations: [ /abc/ ]
+      static-locations: [ classpath:/abc/ ]
+      # 禁用所有静态资源
+#      add-mappings: false
