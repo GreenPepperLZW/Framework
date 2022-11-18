@@ -7,4 +7,10 @@ spring:
       # 指定静态资源访问文件夹
       static-locations: [ classpath:/abc/ ]
       # 禁用所有静态资源
-#      add-mappings: false
+  #      add-mappings: false
+
+  mvc:
+    hiddenmethod:
+      filter:
+        # 开启页面form表单提交restFull风格请求方式
+        enabled: true
