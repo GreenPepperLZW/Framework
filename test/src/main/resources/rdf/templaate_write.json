@@ -13,13 +13,14 @@
     "age|年龄|Integer",
     "longN|长整型|Long",
     "bol|布尔值|Boolean",
-    "memo|备注"
+    "memo|备注",
+    "spec|特殊符号"
   ],
   "tail": [
     "totalCount|总笔数|Required|Integer",
     "totalAmount|总金额|BigDecimal|Required"
   ],
-  "protocol": "batch_file_up",
+  "protocol": "SP",
   "lineBreak": "\r\n",
   "summaryColumnPairs": [
     "totalAmount|amount"

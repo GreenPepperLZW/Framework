@@ -30,7 +30,7 @@ public class RdfTest {
      * 文档：https://github.com/alipay/rdf-file/wiki
      */
     @Test
-    public void test1() {
+    public void read() {
         FileConfig config = new FileConfig("D:\\Code\\framework\\test\\src\\main\\resources\\file\\file.txt", "/rdf/template_1.json", new StorageConfig("nas"));
         config.setSummaryEnable(true); // 开启汇总字段汇总功能
         config.setColumnSplit("|");
@@ -69,13 +69,14 @@ public class RdfTest {
 
     /**
      * 写文件之汇总写
+     * 文档：https://github.com/alipay/rdf-file/wiki/%E5%86%99%E6%96%87%E4%BB%B6%E4%B9%8B%E6%B1%87%E6%80%BB%E5%86%99#%E4%B8%80%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89%E6%A8%A1%E6%9D%BF
      */
     @Test
-    public void test2() {
+    public void write() {
         String filePath = "D:\\Code\\framework\\test\\src\\main\\resources\\file";
         FileConfig config = new FileConfig(new File(filePath, "test.txt").getAbsolutePath(), "/rdf/templaate_write.json", new StorageConfig("nas"));
         config.setSummaryEnable(true); //启动汇总功能
-        config.setColumnSplit("");
+        config.setColumnSplit("|");
         FileWriter fileWriter = FileFactory.createWriter(config);
         try {
             // 头使用数据定义模板的常量
@@ -96,6 +97,7 @@ public class RdfTest {
             body.put("longN", new Long(33));
             body.put("bol", true);
             body.put("memo", "memo1");
+//            body.put("spec", "|");
             fileWriter.writeRow(body);
             testDate = DateUtil.parse("2016-02-03 12:22:33", "yyyy-MM-dd HH:mm:ss");
             body.put("seq", "seq234567");
@@ -109,6 +111,7 @@ public class RdfTest {
             body.put("longN", 125);
             body.put("bol", false);
             body.put("memo", "memo2");
+//            body.put("spec", "|");
             fileWriter.writeRow(body);
 
             // 根据汇总信息写入尾部

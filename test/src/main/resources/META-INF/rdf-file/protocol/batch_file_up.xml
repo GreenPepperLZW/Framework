@@ -1,4 +1,4 @@
-<protocol name="batch_file_up" rowsplit="rowSplitByFixedlLengthAndSeparator">
+<protocol name="batch_file_up" rowsplit="rowSplitBySeparator">
     <head>
         <row>
             <column>
