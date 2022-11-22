@@ -61,4 +61,37 @@ public class ParameterTestController {
         map.put("content", content);
         return map;
     }
+
+    /**
+     * 测试请求地址中矩阵变量的获取
+     *
+     * @return
+     */
+    // 请求地址格式：cars/sell;low=34;brand=byd,audi
+    // springMvc默认禁用矩阵变量，需要手动开启
+    @GetMapping("/cars/sell")
+    public Map carsCell(@MatrixVariable Integer low,
+                        @MatrixVariable List<String> brand) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("low", low);
+        map.put("brand", brand);
+        return map;
+    }
+
+
+    /**
+     * 请求路径中携带的矩阵变量名字一样时，获取参数
+     * /boss/1;age=20/2;age=10
+     * @param bossAge
+     * @param empAge
+     * @return
+     */
+    @GetMapping("/boss/{bossId}/{empId}")
+    public Map boss(@MatrixVariable(value = "age",pathVar = "bossId") Integer bossAge ,
+                    @MatrixVariable(value = "age",pathVar = "empId") Integer empAge) {
+        Map map = new HashMap();
+        map.put("bossAge", bossAge);
+        map.put("empAge", empAge);
+        return map;
+    }
 }
