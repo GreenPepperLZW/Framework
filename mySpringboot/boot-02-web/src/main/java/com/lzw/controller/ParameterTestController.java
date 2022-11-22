@@ -1,0 +1,64 @@
+package com.lzw.controller;
+
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.Cookie;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * @author : lzw
+ * @date : 2022/11/18
+ * @since : 1.0
+ */
+@RestController
+public class ParameterTestController {
+
+    /**
+     * @param id
+     * @param name
+     * @param pv
+     * @return #
+     * @PathVariable 注解使用，获取请求路径上{} 中的参数,使用@PathVariable Map<String, String> pv可以获取请求路径上携带的所有请求参数
+     * @RequestHeader 获取请求头信息，@RequestHeader Map<String, String> header，map类型形参可以获取所有请求头信息
+     * @CookieValue 获取cookie的值,@CookieValue("XXL_JOB_LOGIN_IDENTITY") Cookie cookie这种方式可以获取cookie的键值对
+     */
+    @GetMapping("/car/{id}/owner/{name}")
+    public Map<String, Object> getCar(@PathVariable("id") Integer id,
+                                      @PathVariable("name") String name,
+                                      @PathVariable Map<String, String> pv,
+                                      @RequestHeader("User-Agent") String userAgetn,
+                                      @RequestHeader Map<String, String> header,
+                                      @RequestParam Integer age,
+                                      @RequestParam List<String> inters,
+                                      @RequestParam Map<String, String> params,
+                                      @CookieValue("XXL_JOB_LOGIN_IDENTITY") String _ga,
+                                      @CookieValue("XXL_JOB_LOGIN_IDENTITY") Cookie cookie) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        map.put("name", name);
+        map.put("pv", pv);
+        map.put("userAgetn", userAgetn);
+        map.put("headers", header);
+        map.put("age", age);
+        map.put("inters", inters);
+        map.put("params", params);
+        map.put("XXL_JOB_LOGIN_IDENTITY", _ga);
+        map.put("cookie", cookie);
+
+        return map;
+    }
+
+    /**
+     * @param content
+     * @return
+     * @RequestBody 接收post请求方式中的请求体参数
+     */
+    @PostMapping("/save")
+    public Map post(@RequestBody String content) {
+        Map map = new HashMap();
+        map.put("content", content);
+        return map;
+    }
+}
