@@ -1,6 +1,9 @@
 package com.lzw.controller;
 
+import com.lzw.bean.Person;
 import org.springframework.core.MethodParameter;
+import org.springframework.core.convert.TypeDescriptor;
+import org.springframework.core.convert.converter.GenericConverter;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -30,11 +33,27 @@ import java.util.Map;
 @RestController
 public class ParameterTestController {
 
+
+    /**
+     * 自定义参数绑定原理
+     * 关键步骤
+     *
+     * {@link ConversionUtils#invokeConverter(GenericConverter, Object, TypeDescriptor, TypeDescriptor)} 获取转换器
+     *
+     * @param person
+     * @return
+     */
+    @PostMapping("/saveuser")
+    public Person saveUser(Person person) {
+        return person;
+    }
+
     /**
      * @param id
      * @param name
      * @param pv
      * @return #
+     * 各个注解作用说明：
      * @PathVariable 注解使用，获取请求路径上{} 中的参数,使用@PathVariable Map<String, String> pv可以获取请求路径上携带的所有请求参数
      * @RequestHeader 获取请求头信息，@RequestHeader Map<String, String> header，map类型形参可以获取所有请求头信息
      * @CookieValue 获取cookie的值,@CookieValue("XXL_JOB_LOGIN_IDENTITY") Cookie cookie这种方式可以获取cookie的键值对
