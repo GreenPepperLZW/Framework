@@ -14,3 +14,7 @@ spring:
       filter:
         # 开启页面form表单提交restFull风格请求方式
         enabled: true
+        # 开启请求参数设置内容协商，默认读取请求头中Accept的值来确定返回什么格式的数据给前端，该配置开启后，只需要在请求参数加上 format=json或xml这个参数就可以
+        # 很方便的自定义返回格式了，请求格式：/test/person?format=xml
+    contentnegotiation:
+      favor-parameter: true
