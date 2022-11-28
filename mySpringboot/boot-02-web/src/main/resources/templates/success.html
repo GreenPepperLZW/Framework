@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<th:block>
+</th:block>
+
+<!--从请求域中获取值-->
+<h1 th:text="${msg}">哈哈</h1>
+<h2>
+    <a href="https://www.baidu.com" th:href="${link}">去百度</a>
+    <br/>
+    <!-- 会认为@标签中的东西都是字符串，不会做取值操作-->
+    <a href="https://www.baidu.com" th:href="@{link}">去百度2</a>
+</h2>
+</body>
+</html>

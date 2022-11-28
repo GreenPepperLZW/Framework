@@ -18,3 +18,7 @@ spring:
         # 很方便的自定义返回格式了，请求格式：/test/person?format=xml
     contentnegotiation:
       favor-parameter: true
+server:
+  servlet:
+  #整个项目的请求前置路径
+  #context-path: /world
