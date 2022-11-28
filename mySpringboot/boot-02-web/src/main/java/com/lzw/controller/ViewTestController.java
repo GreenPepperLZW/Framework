@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
- * 测试试图
+ * 测试跳转到thymeleaf视图
  *
  * @author : lzw
  * @date : 2022/11/28
