@@ -1,6 +1,7 @@
 package com.lzw.web.controller;
 
 import com.lzw.web.bean.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpSession;
  * @date : 2022/11/28
  * @since : 1.0
  */
+@Slf4j
 @Controller
 public class IndexController {
 
@@ -26,7 +28,7 @@ public class IndexController {
 
     @PostMapping("login")
     public String man(User user, HttpSession session, Model model) {
-        if (!(StringUtils.isEmpty(user.getUserName())) && "123456".equals(user.getPassword())) {
+        if (!(StringUtils.isEmpty(user.getUserName())) && "a".equals(user.getPassword())) {
             // 把登录成功的用户保存起来
             session.setAttribute("loginUser", user);
             // 登录后重定向到主页面，防止跳转到主页面后请求仍是登录请求，刷新页面表单反复提交登录请求
@@ -40,8 +42,9 @@ public class IndexController {
 
     @GetMapping("main.html")
     public String mainPage(HttpSession session, Model model) {
+        log.info("当前执行的方法是：{}", "mainPage");
 
-        // 判断是否登录
+        /*// 判断是否登录
         Object loginUser = session.getAttribute("loginUser");
         if (loginUser != null) {
             return "main";
@@ -49,6 +52,7 @@ public class IndexController {
             model.addAttribute("msg", "请进行登录");
             // 回到登录页
             return "login";
-        }
+        }*/
+        return "main";
     }
 }

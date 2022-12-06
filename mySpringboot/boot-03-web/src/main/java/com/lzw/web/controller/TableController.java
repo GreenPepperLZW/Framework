@@ -1,7 +1,12 @@
 package com.lzw.web.controller;
 
+import com.lzw.web.bean.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 访问表格的处理器
@@ -20,8 +25,13 @@ public class TableController {
     }
 
     @GetMapping("dynamic_table")
-    public String dynamicTable() {
-
+    public String dynamicTable(Model model) {
+        //构造数据
+        List<User> users = Arrays.asList(new User("zhangsan", "aa"),
+                new User("lisi", "bbb"),
+                new User("wangwu", "cccc"),
+                new User("zhaoliu", "dddd"));
+        model.addAttribute("users", users);
         return "table/dynamic_table";
     }
 
@@ -35,6 +45,12 @@ public class TableController {
     public String editableTable() {
 
         return "table/editable_table";
+    }
+
+    @GetMapping("/form_layouts")
+    public String formlayouts() {
+
+        return "form/form_layouts";
     }
 }
 
