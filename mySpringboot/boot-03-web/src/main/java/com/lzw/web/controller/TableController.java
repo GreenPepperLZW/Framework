@@ -47,10 +47,5 @@ public class TableController {
         return "table/editable_table";
     }
 
-    @GetMapping("/form_layouts")
-    public String formlayouts() {
-
-        return "form/form_layouts";
-    }
 }
 
