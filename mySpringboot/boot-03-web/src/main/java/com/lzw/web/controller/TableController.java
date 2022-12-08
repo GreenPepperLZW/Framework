@@ -20,7 +20,7 @@ public class TableController {
 
     @GetMapping("/basic_table")
     public String basicTable() {
-
+        int i = 10 / 0;
         return "table/basic_table";
     }
 
