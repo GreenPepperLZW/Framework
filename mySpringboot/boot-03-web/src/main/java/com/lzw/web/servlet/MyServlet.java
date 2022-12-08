@@ -1,7 +1,6 @@
 package com.lzw.web.servlet;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,7 +11,7 @@ import java.io.IOException;
  * @date : 2022/12/8
  * @since : 1.0
  */
-@WebServlet(urlPatterns = "/my")
+//@WebServlet(urlPatterns = "/my")
 public class MyServlet extends HttpServlet {
 
     @Override

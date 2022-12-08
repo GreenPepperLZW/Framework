@@ -3,7 +3,6 @@ package com.lzw.web.servlet;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
 /**
@@ -14,7 +13,7 @@ import java.io.IOException;
 
 @Slf4j
 // 单个 * 号是servlet的下发，双 * 是spring的写法
-@WebFilter(urlPatterns = {"/css/*", "/images/*"})
+//@WebFilter(urlPatterns = {"/css/*", "/images/*"})
 public class MyFilter implements Filter {
 
     @Override
