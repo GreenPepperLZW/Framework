@@ -1,6 +1,7 @@
 package com.lzw.web.controller;
 
 import com.lzw.web.bean.User;
+import com.lzw.web.exception.UserTooManyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,10 @@ public class TableController {
                 new User("wangwu", "cccc"),
                 new User("zhaoliu", "dddd"));
         model.addAttribute("users", users);
+
+        if (true) {
+            throw new UserTooManyException();
+        }
         return "table/dynamic_table";
     }
 
