@@ -2,13 +2,18 @@ package com.lzw.web.controller;
 
 import com.lzw.web.bean.User;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author : lzw
@@ -19,9 +24,18 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class IndexController {
 
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    @ResponseBody
+    @GetMapping("testSql")
+    public String testSql() {
+        List<Map<String, Object>> maps = jdbcTemplate.queryForList("select * from user");
+        return maps.toString();
+    }
+
     @GetMapping(value = {"/", "/login"})
     public String toLoginPage() {
-
         return "login";
     }
 
