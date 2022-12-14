@@ -1,6 +1,8 @@
 package com.lzw.web.controller;
 
 import com.lzw.web.bean.User;
+import com.lzw.web.bean.UserDto;
+import com.lzw.web.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -9,9 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
@@ -27,9 +31,19 @@ public class IndexController {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private UserService userService;
+
+    @ResponseBody
+    @GetMapping("getUser")
+    public UserDto getUserDto(@RequestParam("id") BigInteger id) {
+        return userService.getUserDto(id);
+    }
+
     @ResponseBody
     @GetMapping("testSql")
     public String testSql() {
+
         List<Map<String, Object>> maps = jdbcTemplate.queryForList("select * from user");
         return maps.toString();
     }
@@ -39,7 +53,7 @@ public class IndexController {
         return "login";
     }
 
-
+    
     @PostMapping("login")
     public String man(User user, HttpSession session, Model model) {
         if (!(StringUtils.isEmpty(user.getUserName())) && "a".equals(user.getPassword())) {

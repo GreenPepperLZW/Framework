@@ -13,7 +13,6 @@ import org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolv
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * 框架中默认提供了四个异常处理解析器分别是：
@@ -46,7 +45,7 @@ public class CustomerHandlerExceptionResolver implements HandlerExceptionResolve
                                          Exception ex) {
         try {
             response.sendError(511, "我自定义的错误");
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return new ModelAndView();
