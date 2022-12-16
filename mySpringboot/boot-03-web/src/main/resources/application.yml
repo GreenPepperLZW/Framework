@@ -45,6 +45,17 @@ spring:
         enabled: true
         url-pattern: /*
         exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+  # 配置指标监控页面的服务端
+  boot:
+    admin:
+      client:
+        url: http://localhost:9094
+        instance:
+          # 使用ip注册服务，默认使用主机名
+          prefer-ip: true
+  application:
+    name: boot-03-web
+
 
 mybatis:
   # mybatis全局配置文件
@@ -54,3 +65,33 @@ mybatis:
   #开启驼峰命名，对于属性配置，如果指定了 config-location 的路径，则必须再指定的配置文件里配置，否则会冲突
 #  configuration:
 #    map-underscore-to-camel-case: true
+
+# management 管理所有actuator的配置
+management:
+  endpoints:
+    # 处于安全考虑，关闭所有监控端点，如果想要开启，需要单独挨个去开启，默认值为true
+    enabled-by-default: true
+    web:
+      exposure:
+        # 默认以JMX方法暴露所有监控端点，这里配置以web方式暴露所有监控端点
+        include: '*'
+  #配置监控端点的详细信息
+  endpoint:
+    health:
+      show-details: always
+      # 开启监控端点
+      enabled: true
+    beans:
+      enabled: true
+    info:
+      enabled: true
+    metrics:
+      enabled: true
+
+#定义应用的信息
+info:
+  # 从maven中获取项目名称
+  appName: @project.artifactId@
+  version: @project.version@
+
+

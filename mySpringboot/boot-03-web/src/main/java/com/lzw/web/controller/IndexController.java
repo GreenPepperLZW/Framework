@@ -3,6 +3,8 @@ package com.lzw.web.controller;
 import com.lzw.web.bean.User;
 import com.lzw.web.bean.UserDto;
 import com.lzw.web.service.UserService;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -28,11 +30,18 @@ import java.util.Map;
 @Controller
 public class IndexController {
 
+    /**
+     * 指标监控注册器
+     */
+    Counter counter;
     @Autowired
     private JdbcTemplate jdbcTemplate;
-
     @Autowired
     private UserService userService;
+
+    public IndexController(MeterRegistry registry) {
+        counter = registry.counter("login.count");
+    }
 
     @ResponseBody
     @GetMapping("getUser")
@@ -50,10 +59,12 @@ public class IndexController {
 
     @GetMapping(value = {"/", "/login"})
     public String toLoginPage() {
+        // 次数加1
+        counter.increment();
         return "login";
     }
 
-    
+
     @PostMapping("login")
     public String man(User user, HttpSession session, Model model) {
         if (!(StringUtils.isEmpty(user.getUserName())) && "a".equals(user.getPassword())) {
