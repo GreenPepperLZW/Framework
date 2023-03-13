@@ -66,7 +66,7 @@ class Account {
     public void transfer(Account target, int amount) {
         /**
          *  a账户的余额是共享变量，b账户的余额也是共享变量，
-         *  此时使用synchronized只能保护this的共享变量，不能保护其他实例在操纵时的线程安全问题
+         *  此时使用synchronized只能保护this的共享变量，不能保护其他实例在操纵时的线程安全问题,如果使用this来做锁对象，则a、b账户会各自持有一把锁，无法保证线程安全问题
          *  两个实例在两个线程中互相调用各自的共享变量，使用这两个实例共享的对象或类来做锁，即可保证线程安全问题
          */
         synchronized (Account.class) {
