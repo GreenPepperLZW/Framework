@@ -16,7 +16,7 @@ public class SparscArray {
         // 0：没有棋子，1：白字，2：蓝子
         // 第二行第三列有一个白子
         chessArry[1][2] = 1;
-        // 第三行第四列有一个黑子
+        // 第三行第四列有一个蓝子
         chessArry[2][3] = 2;
         // 将棋盘打印一下，二维数组外层循环行，内层循环列
         for (int[] row : chessArry) {
