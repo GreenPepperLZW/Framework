@@ -79,7 +79,7 @@ class CircleSingleLinkedList {
             }
             helper = helper.getNext();
         }
-        // 让first和helper移动startNo - 1次，目的是为了让firs移动到startNo的位置上
+        // 让first和helper移动startNo - 1次，目的是为了让fist移动到startNo的位置上
         for (int j = 0; j < startNo - 1; j++) {
             helper = helper.getNext();
             first = first.getNext();
