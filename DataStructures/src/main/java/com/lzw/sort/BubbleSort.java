@@ -20,7 +20,7 @@ public class BubbleSort {
 
     public static void sort(int[] array) {
         int n = 0;
-        int temp = 0;
+        int temp;
         boolean flag = false;
         // 将 i 的初始值设为1，外层循环每走一次确定一个最大值，所有只需要走 array.length - 1 次就能排完序
         for (int i = 1; i < array.length; i++) {
