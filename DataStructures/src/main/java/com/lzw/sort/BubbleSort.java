@@ -16,6 +16,17 @@ public class BubbleSort {
         for (int i = 0; i < arr.length; i++) {
             System.out.print(arr[i] + " ");
         }
+        // 速度测试
+        int[] testArr = new int[80000];
+        for (int i = 0; i < 80000; i++) {
+            testArr[i] = (int) (Math.random() * 80000); // 生成一个 [0,80000)的数
+        }
+        long l = System.currentTimeMillis();
+        sort(testArr);
+        long l1 = System.currentTimeMillis();
+        long timeConsume = l1 - l;
+        System.out.printf("耗时：" + timeConsume + "ms");// 10秒左右
+
     }
 
     public static void sort(int[] array) {
