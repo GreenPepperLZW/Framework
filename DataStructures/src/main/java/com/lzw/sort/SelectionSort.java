@@ -36,11 +36,12 @@ public class SelectionSort {
         int min;
         int minIndex;
         int next;
+        // 四个数据只需要循环三次即可排好序，所以是  array.length - 1
         for (int j = 0; j < array.length - 1; j++) {
-            // 外面一层循环确定一个最小值之后，那个值就不在参与比较了，所以从 j 开始计算最小值
+            // 外面一层循环确定一个最小值之后，那个最小值就不再参与比较了，所以从 j 开始计算最小值
             min = array[j];
             minIndex = j;
-            // 每一次循环后找到最小数，i=j+1，表示从当前定义的最小数后一个位置开始找
+            // 每一次循环后找到最小数，i=j+1：表示从当前定义的最小数后一个位置开始找
             for (int i = j + 1; i < array.length; i++) {
                 // 当前最小值的后面一个值
                 next = array[i];
@@ -51,7 +52,7 @@ public class SelectionSort {
                     minIndex = i;
                 }
             }
-            // 如果最小值下标没变，则不需要进行交换
+            // 如果最小值下标没变，则意味着不需要进行交换
             if (minIndex != j) {
                 // 假如j等于0，把数组中第一个数放到最小值的下标处
                 array[minIndex] = array[j];
