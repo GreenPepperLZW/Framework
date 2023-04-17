@@ -2,7 +2,7 @@ package com.lzw.sort;
 
 /**
  * 插入排序：
- * 把n个待排序的元素看成为一个有序表和无序表，开始时有序表中只包含一个元素，无序表中包含n-1个原色
+ * 把n个待排序的元素看成为一个有序表和无序表，开始时有序表中只包含一个元素，无序表中包含n-1个元素
  * 比如数组：{101,34,119,1}
  * 101是有序表中的第一个元素，34,119,1是无序表中的元素
  * 排序过程中每次从无序表中取出第一个元素，把它的排序码和有序表中的排序码 依次 比较，根据从大大小或者从小到大的规则放到合适的位置，使之成为有序表
@@ -26,7 +26,7 @@ public class InsertSort {
         long start = System.currentTimeMillis();
         insert(testArray);
         long end = System.currentTimeMillis();
-        System.out.println("耗时：" + (end - start) + "ms"); //741秒
+        System.out.println("耗时：" + (end - start) + "ms"); //721 ms
     }
 
 
@@ -44,7 +44,7 @@ public class InsertSort {
             // 判断后面一个数是否小于前面一个数，即无序表中的第一个数是否小于有序表中的最后一个数
             while (insertIndex >= 0 && insertVal < array[insertIndex]) {
                 // 按照从小到大的排序规则，如果后面一个数小于前面一个数，则后面这个数要往前面移动.前面的数往后移，交换位置
-                // 前面的数往后移,将101移动到了34的位置，此时34没有丢失，它保存在insertVal这个变量中
+                // 前面的数往后移,将101移动到了34的位置，此时的数组{101,101,1,119,-1}，此时34没有丢失，它保存在insertVal这个变量中
                 array[insertIndex + 1] = array[insertIndex];
                 // 无序表中的第一个数继续和前面一个数比较,insertIndex下标往前挪一下，这个insertIndex最多等于0，保证不越界，所以在循环中要加个条件，insertIndex >= 0
                 insertIndex--;
