@@ -2,6 +2,8 @@ package com.lzw.tree;
 
 /**
  * 二叉树实现
+ * <p>
+ * 无序二叉树
  *
  * @author : lzw
  * @date : 2023/4/18
@@ -39,7 +41,7 @@ public class BinaryTreeDemo {
         binaryTree.postOrder();*/
 
         // 前序查找 需要遍历四次
-        System.out.println("前序查找");
+        /*System.out.println("前序查找");
         HeroNode res1 = binaryTree.preOrderSearch(5);
         System.out.println(res1);
 
@@ -51,7 +53,14 @@ public class BinaryTreeDemo {
         // 需要遍历两次
         System.out.println("后序查找");
         HeroNode res3 = binaryTree.postOrderSearch(5);
-        System.out.println(res3);
+        System.out.println(res3);*/
+
+        // 删除测试
+        System.out.println("删除前数据：");
+        binaryTree.preOder();
+        binaryTree.delete(5);
+        System.out.println("删除后数据");
+        binaryTree.preOder();
     }
 }
 
@@ -64,6 +73,21 @@ class BinaryTree {
 
     public void setRoot(HeroNode root) {
         this.root = root;
+    }
+
+    // 删除节点
+    public void delete(int no) {
+        // 判断节点是否为空
+        if (this == null) {
+            System.out.printf("空树，不能进行删除操作");
+            return;
+        }
+        if (this.root.getNo() == no) {
+            // 将根节点置空
+            this.root = null;
+        }
+        // 开始递归删除
+        this.root.delete(no);
     }
 
     // 前序遍历
@@ -138,6 +162,33 @@ class HeroNode {
     public HeroNode(int no, String name) {
         this.no = no;
         this.name = name;
+    }
+
+    /**
+     * 删除节点
+     */
+    public void delete(int no) {
+
+        // 向左删除
+        if (this.left != null && this.left.no == no) {
+            this.left = null;
+            return;
+        }
+
+        // 向右删除
+        if (this.right != null && this.right.no == no) {
+            this.right = null;
+            return;
+        }
+
+        // 向左递归删除
+        if (this.left != null) {
+            this.left.delete(no);
+        }
+        // 向右递归删除
+        if (this.right != null) {
+            this.right.delete(no);
+        }
     }
 
     /**
