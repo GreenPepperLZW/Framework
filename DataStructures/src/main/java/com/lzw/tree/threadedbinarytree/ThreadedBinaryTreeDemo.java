@@ -49,6 +49,9 @@ public class ThreadedBinaryTreeDemo {
         HeroNode right = node4.getRight();
         System.out.println("10号节点的前驱节点：" + left);
         System.out.println("10号节点的后继节点：" + right);
+
+        // 中序遍历，结果：8，3，10，1，14，6
+        tree.threadedList();
     }
 }
 
@@ -106,6 +109,35 @@ class BinaryTree {
         threadedNodes(node.getRight());
 
     }
+
+
+    /**
+     * 遍历中序线索化二叉树
+     *
+     * @param no
+     */
+    public void threadedList() {
+        // 定义一个变量，存储当前遍历的节点，从root开始
+        HeroNode node = this.root;
+        while (node != null) {
+            // 循环的找左子节点类型为0的节点，直到类型为1，则说明找到了最后一层最左边的一个节点，也就是它的左指针是一个前驱节点
+            while (node.getLeftType() == 0) {
+                node = node.getLeft();
+            }
+            // 第一次打印最后一层最左边的一个节点
+            System.out.print(node.getNo() + " ");
+
+            // 如果当前节点的右指针类型为后继，则把它的后继节点直接输出即可
+            while (node.getRightType() == 1) {
+                node = node.getRight();
+                System.out.print(node.getNo() + " ");
+            }
+            // 说明当前节点的右指针是右子树，不能直接输出，需要把这棵树遍历
+            node = node.getRight();
+
+        }
+    }
+
 
     // 删除节点
     public void delete(int no) {
